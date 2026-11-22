@@ -301,7 +301,7 @@
         game_assets: adapter.join(gameRoot, 'assets', 'virtual', 'legacy'),
         natives_directory: nativesDir,
         launcher_name: 'ecraft launcher',
-        launcher_version: '1.0.0',
+        launcher_version: '2.0.0',
         classpath: [...libPaths, jarPath].join(sep),
         classpath_separator: sep,
         user_properties: '{}'
