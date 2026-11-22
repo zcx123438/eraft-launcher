@@ -30,11 +30,13 @@
       "output": "dist_electron"
     },
     "win": {
-      "target": ["nsis", "portable"]
+      "target": ["nsis", "portable"],
+      "signAndEditExecutable": false
     },
     "mac": {
-      "target": ["dmg"],
-      "category": "public.app-category.games"
+      "target": ["dmg", "zip"],
+      "category": "public.app-category.games",
+      "identity": null
     },
     "nsis": {
       "oneClick": false,
