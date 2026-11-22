@@ -15,6 +15,8 @@
 - 🧩 自动处理版本继承（Forge/整合包式 `inheritsFrom`）、natives 提取、JVM 参数与内存配置
 - 🖥 PCL 风格 UI：侧边栏导航、卡片式布局、自绘标题栏
 
+> 本项目托管于 GitHub：https://github.com/zcx123438/eraft-launcher
+
 ## 平台支持
 
 | 平台 | 状态 | 说明 |
