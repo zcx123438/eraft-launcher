@@ -1,0 +1,10 @@
+include ':app'
+include ':capacitor-cordova-android-plugins'
+project(':capacitor-cordova-android-plugins').projectDir = new File('./capacitor-cordova-android-plugins/')
+
+apply from: 'capacitor.settings.gradle'
+// ==== ecraft 游戏引擎（基于 PojavLauncher，GPLv3）====
+include ':pojav:app_pojavlauncher'
+include ':pojav:jre_lwjgl3glfw'
+include ':pojav:forge_installer'
+include ':pojav:arc_dns_injector'

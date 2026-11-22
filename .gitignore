@@ -1,6 +1,13 @@
 node_modules/
 dist_electron/
-android/
+# 安卓工程：源码入库，构建产物与本地缓存排除
+android/app/build/
+android/build/
+android/pojav/*/build/
+android/.gradle/
+android/local.properties
+android/.idea/
+android/*.hprof
 out/
 *.log
 .DS_Store
