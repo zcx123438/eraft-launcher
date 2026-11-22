@@ -1,6 +1,6 @@
 {
   "name": "ecraft-launcher",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "ecraft launcher —— 跨平台 Minecraft 启动器（PCL 风格 UI），支持 Windows / macOS / Android",
   "main": "main.js",
   "author": "ecraft",
@@ -30,11 +30,13 @@
       "output": "dist_electron"
     },
     "win": {
-      "target": ["nsis", "portable"]
+      "target": ["nsis", "portable"],
+      "signAndEditExecutable": false
     },
     "mac": {
-      "target": ["dmg"],
-      "category": "public.app-category.games"
+      "target": ["dmg", "zip"],
+      "category": "public.app-category.games",
+      "identity": null
     },
     "nsis": {
       "oneClick": false,

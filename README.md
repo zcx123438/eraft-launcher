@@ -14,6 +14,10 @@
 - 🎮 一键启动游戏（离线登录模式，离线 UUID 与官方算法一致）
 - 🧩 自动处理版本继承（Forge/整合包式 `inheritsFrom`）、natives 提取、JVM 参数与内存配置
 - 🖥 PCL 风格 UI：侧边栏导航、卡片式布局、自绘标题栏
+- 🧰 **工具箱（v2.0 新增）**：
+  - 🔍 **错误分析**：粘贴崩溃日志，自动识别 12 类常见错误（内存不足、Java 版本、模组冲突、Mixin 失败、显卡问题等）并给出解决方案
+  - 📦 **JAR 完整性检测**：ZIP 结构校验 + 逐条目 CRC32 校验 + 清单检查，自动识别 Fabric / Forge / Quilt 模组与客户端类型，定位损坏条目
+  - 🎵 **音乐播放器**：播放本地音乐，支持播放列表、进度/音量控制
 
 > 本项目托管于 GitHub：https://github.com/zcx123438/eraft-launcher
 
@@ -61,6 +65,8 @@ ecraft-launcher/
 ├── capacitor.config.json # 安卓端配置
 └── .github/workflows/build.yml  # 三端自动打包 CI
 ```
+
+> v2.0 工具箱代码位于 `src/toolbox.js`（错误分析规则、ZIP/CRC32 校验器、播放器控制）。
 
 ## 路线图
 

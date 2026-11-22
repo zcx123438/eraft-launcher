@@ -170,3 +170,42 @@ input[type="text"]:focus, select:focus { border-color: var(--accent); }
   .side-logo b, .nav-item span:not(.ico), .side-foot { display: none; }
   .nav-item { justify-content: center; }
 }
+
+/* ============ 工具箱 v2.0 ============ */
+.row-gap { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.file-label { position: relative; overflow: hidden; cursor: pointer; display: inline-flex; align-items: center; }
+.file-label.big { font-size: 15px; padding: 12px 26px; }
+textarea.crash-box {
+  width: 100%; min-height: 130px; max-height: 300px; padding: 12px;
+  border: 1px solid var(--line); border-radius: 10px; font: 12px/1.6 Consolas, monospace;
+  outline: none; background: #fbfcfe; resize: vertical; margin-bottom: 12px;
+}
+textarea.crash-box:focus { border-color: var(--accent); }
+.crash-result, .jar-result { margin-top: 6px; }
+.crash-sum { font-size: 14px; margin: 8px 0; }
+.crash-item {
+  border-radius: 10px; padding: 12px 14px; margin: 8px 0; font-size: 13.5px; line-height: 1.7;
+  border: 1px solid var(--line); background: #f7f9fd;
+}
+.crash-item p { margin: 4px 0; }
+.crash-item .fix { color: #1a7a3a; }
+.crash-item.high { border-left: 4px solid #e5484d; background: #fff5f5; }
+.crash-item.medium { border-left: 4px solid #f5a623; background: #fffaef; }
+.crash-item.low { border-left: 4px solid #8a919c; background: #f6f7f9; }
+.crash-item.ok { border-left: 4px solid #30b95c; background: #f1fbf4; }
+.bad-entry { font-family: Consolas, monospace; font-size: 12px; color: #b0303a; }
+.jar-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 10px 0; }
+.jar-table td { padding: 7px 10px; border-bottom: 1px solid var(--line); }
+.jar-table td:first-child { color: var(--dim); width: 90px; }
+#jar-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width .2s; }
+.music-now { font-size: 14px; margin: 10px 0; padding: 10px 14px; background: #eef4ff; border-radius: 10px; }
+.player-controls { display: flex; align-items: center; gap: 10px; margin: 6px 0 12px; flex-wrap: wrap; }
+.player-controls input[type="range"] { flex: 1; min-width: 120px; accent-color: var(--accent); }
+.pc-btn {
+  width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line);
+  background: #fff; cursor: pointer; font-size: 15px;
+}
+.pc-btn:hover { border-color: var(--accent); }
+.pc-btn.main { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: none; width: 48px; height: 48px; font-size: 18px; }
+.music-list { max-height: 220px; }
+#music-time { font-size: 12px; min-width: 96px; text-align: center; }
