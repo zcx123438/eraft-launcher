@@ -75,7 +75,7 @@
     // 安卓 / 浏览器：使用 Capacitor Filesystem 插件
     const Cap = () => window.Capacitor && window.Capacitor.Plugins;
     const FS = () => { const p = Cap().Filesystem; if (!p) throw new Error('Filesystem 插件不可用'); return p; };
-    const BASE = 'ecraft'; // Directory.Data 下的根目录
+    const BASE = '.minecraft'; // 应用专属外部存储根（引擎 DIR_GAME_HOME）下的 .minecraft 目录
 
     window.ECraftAdapter = {
       kind: 'web',
@@ -88,11 +88,11 @@
       },
       async ensureDir(dir) {
         const rel = dir.startsWith(BASE + '/') ? dir.slice(BASE.length + 1) : dir;
-        try { await FS().mkdir({ path: rel, directory: 'DATA', recursive: true }); } catch (e) { /* 已存在 */ }
+        try { await FS().mkdir({ path: rel, directory: 'EXTERNAL', recursive: true }); } catch (e) { /* 已存在 */ }
       },
       async exists(p) {
         const rel = p.startsWith(BASE + '/') ? p.slice(BASE.length + 1) : p;
-        try { await FS().stat({ path: rel, directory: 'DATA' }); return true; } catch { return false; }
+        try { await FS().stat({ path: rel, directory: 'EXTERNAL' }); return true; } catch { return false; }
       },
       async writeFile(p, data) {
         const rel = p.startsWith(BASE + '/') ? p.slice(BASE.length + 1) : p;
@@ -103,12 +103,12 @@
         }));
         const u8 = data instanceof Uint8Array ? data : new Uint8Array(data);
         await this.ensureDir(this.dirname(p));
-        await FS().writeFile({ path: rel, directory: 'DATA', data: b64(u8) });
+        await FS().writeFile({ path: rel, directory: 'EXTERNAL', data: b64(u8) });
       },
       async writeText(p, t) { await this.writeFile(p, new TextEncoder().encode(t)); },
       async readFile(p) {
         const rel = p.startsWith(BASE + '/') ? p.slice(BASE.length + 1) : p;
-        const r = await FS().readFile({ path: rel, directory: 'DATA' });
+        const r = await FS().readFile({ path: rel, directory: 'EXTERNAL' });
         const bin = atob(r.data);
         const u8 = new Uint8Array(bin.length);
         for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
@@ -123,7 +123,7 @@
       async listDir(p) {
         const rel = p.startsWith(BASE + '/') ? p.slice(BASE.length + 1) : p;
         try {
-          const r = await FS().readdir({ path: rel, directory: 'DATA' });
+          const r = await FS().readdir({ path: rel, directory: 'EXTERNAL' });
           return (r.files || []).filter(f => f.type === 'directory').map(f => f.name);
         } catch { return []; }
       },
@@ -150,7 +150,17 @@
         return all;
       },
       async pickJava() { return null; },
-      async spawnGame() { throw new Error('安卓端暂不支持直接启动游戏'); },
+      async spawnGame(versionId, username) {
+        // 走原生引擎（Pojav 内核）启动游戏
+        const g = Cap().EcraftGame;
+        if (!g) throw new Error('原生游戏引擎不可用（请更新安装包）');
+        return await g.launch({ versionId, username: username || 'Steve' });
+      },
+      async gameDir() {
+        const g = Cap().EcraftGame;
+        if (!g) return null;
+        try { return (await g.gameDir()).path; } catch { return null; }
+      },
       onGameLog() {}, onGameExit() {},
       win() {}, reveal() {}
     };

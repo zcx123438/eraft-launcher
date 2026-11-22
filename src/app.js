@@ -156,13 +156,21 @@
     };
     saveSettings({ ...s, lastVersion: id, username });
     try {
-      await C.launch(id, A, env.gameRoot, opts,
-        p => setProgress('启动准备 · ' + p.stage, p.done, p.total, p.text),
-        line => { $('#log').textContent += line + '\n'; $('#log').scrollTop = 1e9; }
-      );
-      toast(`游戏已启动（${username}）`);
-      hideProgress();
-      setProgress('游戏运行中', 1, 1, 'Minecraft 窗口应已弹出');
+      if (A.platform === 'android' && A.spawnGame && !A.isElectron) {
+        // 安卓端：交给原生引擎（Pojav 内核）渲染启动
+        hideProgress();
+        setProgress('正在进入游戏', 1, 1, '引擎启动中，请稍候…');
+        await A.spawnGame(id, username);
+        toast(`游戏启动中（${username}）`);
+      } else {
+        await C.launch(id, A, env.gameRoot, opts,
+          p => setProgress('启动准备 · ' + p.stage, p.done, p.total, p.text),
+          line => { $('#log').textContent += line + '\n'; $('#log').scrollTop = 1e9; }
+        );
+        toast(`游戏已启动（${username}）`);
+        hideProgress();
+        setProgress('游戏运行中', 1, 1, 'Minecraft 窗口应已弹出');
+      }
     } catch (e) {
       toast('启动失败：' + e.message, 5000);
       $('#log').textContent += '[错误] ' + e.message + '\n';
