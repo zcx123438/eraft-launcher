@@ -9,6 +9,10 @@ on:
 permissions:
   contents: write
 
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  CSC_IDENTITY_AUTO_DISCOVERY: false
+
 jobs:
   build-desktop:
     name: 桌面端 - ${{ matrix.os }}
@@ -29,11 +33,11 @@ jobs:
 
       - name: 打包 Windows（NSIS 安装包 + 便携版）
         if: runner.os == 'Windows'
-        run: npm run dist:win
+        run: npm run dist:win -- --publish never
 
       - name: 打包 macOS（DMG）
         if: runner.os == 'macOS'
-        run: npm run dist:mac
+        run: npm run dist:mac -- --publish never
 
       - name: 上传构建产物
         uses: actions/upload-artifact@v4
