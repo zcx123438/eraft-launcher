@@ -27,7 +27,7 @@
 | --- | --- | --- |
 | Windows | ✅ 完整可用 | NSIS 安装包 + 便携版，自动下载 + 启动 |
 | macOS | ✅ 完整可用 | DMG，自动下载 + 启动（需系统已装 Java 或在设置中指定路径） |
-| Android | ⚠️ 部分可用 | APK 可安装，支持版本浏览与游戏文件下载管理；**直接在手机上运行游戏**需要内置 Java 运行环境（PojavLauncher 内核集成已列入路线图） |
+| Android | ✅ 可游玩 | APK 可安装，**v2.1.0 起内置游戏引擎（PojavLauncher 内核）**：下载版本后可直接在手机上启动游玩 |
 
 ## 下载安装
 
@@ -70,11 +70,13 @@ ecraft-launcher/
 
 ## 路线图
 
-- [ ] Android 端集成 PojavLauncher 运行内核，实现手机直接启动游戏
+- [x] Android 端集成 PojavLauncher 运行内核，实现手机直接启动游戏（v2.1.0 完成）
 - [ ] 微软正版登录（MSA OAuth）
 - [ ] Forge / Fabric / OptiFine 自动安装
 - [ ] 模组与整合包管理
 
 ## 许可证
+
+本项目整体以 **GPLv3** 发布（安卓端内置的游戏引擎基于 [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher)（GPLv3），依照许可证要求本项目同以 GPLv3 开源并向 PojavLauncher Team 致谢）。
 
 MIT。Minecraft 为 Mojang / Microsoft 的商标，本项目仅为第三方启动器，请支持正版。
