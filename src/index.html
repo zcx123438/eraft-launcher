@@ -29,8 +29,9 @@
       </div>
       <button class="nav-item active" data-page="home"><span class="ico">🏠</span>主页</button>
       <button class="nav-item" data-page="download"><span class="ico">⬇️</span>下载</button>
+      <button class="nav-item" data-page="toolbox"><span class="ico">🧰</span>工具箱</button>
       <button class="nav-item" data-page="settings"><span class="ico">⚙️</span>设置</button>
-      <div class="side-foot">v1.0.0<br />跨平台 · Windows / macOS / Android</div>
+      <div class="side-foot">v2.0.0<br />跨平台 · Windows / macOS / Android</div>
     </nav>
 
     <!-- 主内容 -->
@@ -96,6 +97,56 @@
         </div>
       </section>
 
+      <!-- 工具箱 -->
+      <section class="page" id="page-toolbox">
+        <!-- 错误分析 -->
+        <div class="card">
+          <h2>🔍 错误分析</h2>
+          <p class="dim" style="margin-bottom:10px">把游戏崩溃日志 / 报错信息粘贴到下面（或导入日志文件），自动分析原因并给出解决方案。</p>
+          <textarea id="crash-input" class="crash-box" placeholder="在此粘贴崩溃日志，例如：
+java.lang.OutOfMemoryError: Java heap space
+	at ..."></textarea>
+          <div class="row-gap">
+            <button id="btn-analyze" class="btn-primary">🧪 分析错误</button>
+            <label class="btn-ghost file-label">导入日志文件<input type="file" id="crash-file" accept=".log,.txt" hidden /></label>
+            <button id="btn-analyze-clear" class="btn-ghost">清空</button>
+          </div>
+          <div id="crash-result" class="crash-result" style="display:none"></div>
+        </div>
+
+        <!-- JAR 检测 -->
+        <div class="card">
+          <h2>📦 JAR 完整性检测</h2>
+          <p class="dim" style="margin-bottom:10px">自动检测 jar 文件（游戏客户端 / 模组 / 依赖库）是否损坏：ZIP 结构、CRC 校验、清单文件、模组类型识别。</p>
+          <label class="btn-primary file-label big">📂 选择 .jar 文件<input type="file" id="jar-file" accept=".jar,.zip" hidden /></label>
+          <div id="jar-result" class="jar-result" style="display:none">
+            <div class="bar" style="margin-top:12px"><div id="jar-bar"></div></div>
+            <div id="jar-report"></div>
+          </div>
+        </div>
+
+        <!-- 音乐播放器 -->
+        <div class="card">
+          <h2>🎵 音乐播放器</h2>
+          <div class="row-gap">
+            <label class="btn-ghost file-label">➕ 添加本地音乐<input type="file" id="music-files" accept="audio/*" multiple hidden /></label>
+            <span class="dim" id="music-empty-hint">支持 mp3 / flac / wav / ogg 等，添加后即可边玩边听</span>
+          </div>
+          <div id="music-now" class="music-now dim">未在播放</div>
+          <div class="player-controls">
+            <button id="music-prev" class="pc-btn">⏮</button>
+            <button id="music-play" class="pc-btn main">▶</button>
+            <button id="music-next" class="pc-btn">⏭</button>
+            <input id="music-seek" type="range" min="0" max="1000" value="0" />
+            <span id="music-time" class="dim">00:00 / 00:00</span>
+            <span>🔊</span>
+            <input id="music-vol" type="range" min="0" max="100" value="80" style="width:80px" />
+          </div>
+          <ul id="music-list" class="ver-list music-list"></ul>
+          <audio id="music-audio"></audio>
+        </div>
+      </section>
+
       <!-- 设置页 -->
       <section class="page" id="page-settings">
         <div class="card">
@@ -142,6 +193,7 @@
   <script src="md5.js"></script>
   <script src="adapter.js"></script>
   <script src="core.js"></script>
+  <script src="toolbox.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
