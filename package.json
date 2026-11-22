@@ -1,0 +1,45 @@
+{
+  "name": "ecraft-launcher",
+  "version": "1.0.0",
+  "description": "ecraft launcher —— 跨平台 Minecraft 启动器（PCL 风格 UI），支持 Windows / macOS / Android",
+  "main": "main.js",
+  "author": "ecraft",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win nsis portable",
+    "dist:mac": "electron-builder --mac dmg",
+    "dist:linux": "electron-builder --linux AppImage",
+    "android:sync": "cap sync android",
+    "android:build": "cd android && ./gradlew assembleDebug"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/cli": "^6.1.2",
+    "electron": "^31.3.0",
+    "electron-builder": "^24.13.3"
+  },
+  "dependencies": {
+    "@capacitor/core": "^6.1.2",
+    "@capacitor/filesystem": "^6.0.1"
+  },
+  "build": {
+    "appId": "com.ecraft.launcher",
+    "productName": "ecraft launcher",
+    "directories": {
+      "output": "dist_electron"
+    },
+    "win": {
+      "target": ["nsis", "portable"]
+    },
+    "mac": {
+      "target": ["dmg"],
+      "category": "public.app-category.games"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    }
+  }
+}
