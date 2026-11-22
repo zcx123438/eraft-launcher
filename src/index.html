@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>ecraft launcher</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- 自绘标题栏（桌面端） -->
+  <div id="titlebar">
+    <div class="tb-left">
+      <img src="logo.svg" alt="" class="tb-logo" />
+      <span>ecraft launcher</span>
+    </div>
+    <div class="tb-right">
+      <button class="tb-btn" id="tb-min" title="最小化">─</button>
+      <button class="tb-btn" id="tb-max" title="最大化">□</button>
+      <button class="tb-btn tb-close" id="tb-close" title="关闭">✕</button>
+    </div>
+  </div>
+
+  <div id="layout">
+    <!-- 侧边栏 -->
+    <nav id="sidebar">
+      <div class="side-logo">
+        <img src="logo.svg" alt="ecraft" />
+        <b>ecraft<br /><small>launcher</small></b>
+      </div>
+      <button class="nav-item active" data-page="home"><span class="ico">🏠</span>主页</button>
+      <button class="nav-item" data-page="download"><span class="ico">⬇️</span>下载</button>
+      <button class="nav-item" data-page="settings"><span class="ico">⚙️</span>设置</button>
+      <div class="side-foot">v1.0.0<br />跨平台 · Windows / macOS / Android</div>
+    </nav>
+
+    <!-- 主内容 -->
+    <main id="main">
+      <!-- 主页 -->
+      <section class="page active" id="page-home">
+        <div class="hero card">
+          <div class="hero-text">
+            <h1>ecraft launcher</h1>
+            <p>PCL 风格 · 自动下载 · 一键启动 Minecraft</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>启动游戏</h2>
+          <div class="form-row">
+            <label>玩家名</label>
+            <input id="username" type="text" placeholder="离线模式用户名" value="Steve" maxlength="16" />
+          </div>
+          <div class="form-row">
+            <label>版本</label>
+            <select id="version-select"><option value="">（加载中…）</option></select>
+          </div>
+          <div class="form-row">
+            <label>内存</label>
+            <div class="mem-wrap">
+              <input id="memory" type="range" min="1024" max="16384" step="512" value="4096" />
+              <span id="memory-label">4096 MB</span>
+            </div>
+          </div>
+          <button id="btn-launch" class="btn-primary">🚀 启动游戏</button>
+          <button id="btn-refresh" class="btn-ghost">刷新版本列表</button>
+        </div>
+
+        <div class="card" id="progress-card" style="display:none">
+          <h2 id="progress-title">下载中…</h2>
+          <div class="bar"><div id="bar-fill"></div></div>
+          <div id="progress-text" class="dim"></div>
+        </div>
+
+        <div class="card" id="log-card" style="display:none">
+          <h2>游戏日志</h2>
+          <pre id="log"></pre>
+        </div>
+
+        <div class="card">
+          <h2>已安装版本</h2>
+          <ul id="installed-list" class="ver-list"><li class="dim">加载中…</li></ul>
+        </div>
+      </section>
+
+      <!-- 下载页 -->
+      <section class="page" id="page-download">
+        <div class="card">
+          <h2>下载 Minecraft</h2>
+          <div class="tabs">
+            <button class="tab active" data-tab="release">正式版</button>
+            <button class="tab" data-tab="snapshot">快照版</button>
+            <button class="tab" data-tab="old">历史版本</button>
+            <span class="dim" id="mirror-tag">镜像：BMCLAPI</span>
+          </div>
+          <ul id="dl-list" class="ver-list dl"><li class="dim">正在获取版本清单…</li></ul>
+        </div>
+      </section>
+
+      <!-- 设置页 -->
+      <section class="page" id="page-settings">
+        <div class="card">
+          <h2>常规设置</h2>
+          <div class="form-row">
+            <label>玩家名</label>
+            <input id="set-username" type="text" value="Steve" maxlength="16" />
+          </div>
+          <div class="form-row">
+            <label>Java 路径</label>
+            <div class="java-row">
+              <input id="set-java" type="text" placeholder="留空使用系统 java" />
+              <button id="btn-pick-java" class="btn-ghost">浏览…</button>
+            </div>
+            <div class="dim" id="java-hint"></div>
+          </div>
+          <div class="form-row">
+            <label>下载源</label>
+            <label class="switch"><input id="set-mirror" type="checkbox" checked /> 使用 BMCLAPI 国内镜像（推荐）</label>
+          </div>
+          <div class="form-row">
+            <label>游戏目录</label>
+            <div class="java-row">
+              <input id="set-gamedir" type="text" readonly />
+              <button id="btn-open-dir" class="btn-ghost">打开</button>
+            </div>
+          </div>
+          <button id="btn-save" class="btn-primary">保存设置</button>
+        </div>
+        <div class="card">
+          <h2>关于</h2>
+          <p class="dim">
+            ecraft launcher 是一个跨平台 Minecraft 启动器（PCL 风格 UI，自研跨平台内核）。
+            Windows / macOS 版支持完整下载与启动；Android 版支持版本浏览与文件下载管理。
+            本项目托管于 GitHub（ERAFT 仓库），仅用于正版/离线学习用途。
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="md5.js"></script>
+  <script src="adapter.js"></script>
+  <script src="core.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

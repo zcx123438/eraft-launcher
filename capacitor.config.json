@@ -1,0 +1,11 @@
+{
+  "appId": "com.ecraft.launcher",
+  "appName": "ecraft launcher",
+  "webDir": "src",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "allowMixedContent": false
+  }
+}
