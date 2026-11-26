@@ -29,7 +29,9 @@ jobs:
           node-version: 20
 
       - name: 安装依赖
-        run: npm install
+        run: |
+          npm config set registry https://registry.npmjs.org
+          npm install --no-audit --no-fund --fetch-retries=5 --fetch-retry-mintimeout=20000
 
       - name: 打包 Windows（NSIS 安装包 + 便携版）
         if: runner.os == 'Windows'
@@ -73,7 +75,8 @@ jobs:
 
       - name: 安装依赖并生成安卓工程
         run: |
-          npm install
+          npm config set registry https://registry.npmjs.org
+          npm install --no-audit --no-fund --fetch-retries=5 --fetch-retry-mintimeout=20000
           npx cap add android || npx cap sync android
           npx cap copy android
 
@@ -108,7 +111,8 @@ jobs:
 
       - name: 安装依赖并同步 iOS 工程
         run: |
-          npm install
+          npm config set registry https://registry.npmjs.org
+          npm install --no-audit --no-fund --fetch-retries=5 --fetch-retry-mintimeout=20000
           npx cap sync ios
 
       - name: 安装 CocoaPods 依赖
