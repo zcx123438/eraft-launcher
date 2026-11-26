@@ -83,6 +83,8 @@ jobs:
       - name: 构建 APK
         run: |
           cd android
+          # CI 环境用 Gradle 官方源（镜像在国内构建机才快）
+          sed -i 's|https://mirrors.cloud.tencent.com/gradle/|https://services.gradle.org/distributions/|' gradle/wrapper/gradle-wrapper.properties
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon
 
