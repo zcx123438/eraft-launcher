@@ -156,7 +156,7 @@
     };
     saveSettings({ ...s, lastVersion: id, username });
     try {
-      if (A.platform === 'android' && A.spawnGame && !A.isElectron) {
+      if ((A.platform === 'android' || A.platform === 'ios') && A.spawnGame && !A.isElectron) {
         // 安卓端：交给原生引擎（Pojav 内核）渲染启动
         hideProgress();
         setProgress('正在进入游戏', 1, 1, '引擎启动中，请稍候…');

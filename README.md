@@ -28,6 +28,7 @@
 | Windows | ✅ 完整可用 | NSIS 安装包 + 便携版，自动下载 + 启动 |
 | macOS | ✅ 完整可用 | DMG，自动下载 + 启动（需系统已装 Java 或在设置中指定路径） |
 | Android | ✅ 可游玩 | APK 可安装，**v2.1.0 起内置游戏引擎（PojavLauncher 内核）**：下载版本后可直接在手机上启动游玩 |
+| iOS | ⚠️ 侧载可用 | v2.2.0 起提供 **未签名 IPA**（云端 macOS 自动构建），需 AltStore / Sideloadly / TrollStore 侧载；支持版本浏览、下载与文件管理，游戏文件位于「文件」App → ecraft launcher；**启动游戏**请配合 [PojavLauncher iOS](https://github.com/PojavLauncherTeam/PojavLauncher_iOS) |
 
 ## 下载安装
 
@@ -37,6 +38,18 @@
    - `ecraft-macOS`：`ecraft launcher.dmg`
    - `ecraft-android`：`app-debug.apk`
 3. 打 tag（如 `v1.0.0`）推送后，会自动发布到 **Releases**
+
+## iOS 安装说明（侧载）
+
+1. 从 Releases 下载 `ecraft-launcher-x.x.x-ios-unsigned.ipa`
+2. 任选一种侧载方式安装：
+   - **AltStore / SideStore**：导入 IPA，用你的 Apple ID 签名安装（免费账号 7 天续签）
+   - **Sideloadly**：Windows/Mac 均可，连数据线签名安装
+   - **TrollStore**：仅限支持的系统版本，可直接安装未签名 IPA，永久有效
+3. 首次打开若提示「未受信任的企业级开发者」，到「设置 → 通用 → VPN 与设备管理」中信任
+4. 游戏文件目录：**「文件」App → 我的 iPhone → ecraft launcher → .minecraft**
+
+> iOS 系统限制 JIT，Minecraft Java 版需借助 PojavLauncher iOS 运行；本启动器负责版本下载、文件管理与工具箱。
 
 ## 本地开发
 

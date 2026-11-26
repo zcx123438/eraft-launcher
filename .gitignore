@@ -11,3 +11,14 @@ android/*.hprof
 out/
 *.log
 .DS_Store
+# iOS 工程：源码入库，依赖与构建产物排除
+ios/App/Pods/
+ios/App/build/
+ios/App/App/public/
+ios/App/App/capacitor.config.json
+ios/App/App/config.xml
+ios/App/App.xcworkspace/xcuserdata/
+ios/App/App.xcodeproj/xcuserdata/
+ios/DerivedData/
+ios/*.ipa
+ios/Payload/

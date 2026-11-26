@@ -75,24 +75,28 @@
     // 安卓 / 浏览器：使用 Capacitor Filesystem 插件
     const Cap = () => window.Capacitor && window.Capacitor.Plugins;
     const FS = () => { const p = Cap().Filesystem; if (!p) throw new Error('Filesystem 插件不可用'); return p; };
-    const BASE = '.minecraft'; // 应用专属外部存储根（引擎 DIR_GAME_HOME）下的 .minecraft 目录
+    // 平台识别：iOS 使用「文件」App 可见的 Documents 目录；安卓使用应用专属外部目录（引擎 DIR_GAME_HOME）
+    const PLATFORM = (window.Capacitor && window.Capacitor.getPlatform) ? window.Capacitor.getPlatform() : 'android';
+    const IS_IOS = PLATFORM === 'ios';
+    const BASE = '.minecraft';
+    const DIR = IS_IOS ? 'DOCUMENTS' : 'EXTERNAL';
 
     window.ECraftAdapter = {
       kind: 'web',
-      platform: 'android',
+      platform: PLATFORM,
       sep: '/',
       join: (...p) => p.join('/').replace(/\/+/g, '/'),
       dirname: p => p.split('/').slice(0, -1).join('/'),
       async getEnv() {
-        return { platform: 'android', isElectron: false, home: '/data', gameRoot: BASE };
+        return { platform: PLATFORM, isElectron: false, home: '/data', gameRoot: BASE };
       },
       async ensureDir(dir) {
         const rel = dir.startsWith(BASE + '/') ? dir.slice(BASE.length + 1) : dir;
-        try { await FS().mkdir({ path: rel, directory: 'EXTERNAL', recursive: true }); } catch (e) { /* 已存在 */ }
+        try { await FS().mkdir({ path: rel, directory: DIR, recursive: true }); } catch (e) { /* 已存在 */ }
       },
       async exists(p) {
         const rel = p.startsWith(BASE + '/') ? p.slice(BASE.length + 1) : p;
-        try { await FS().stat({ path: rel, directory: 'EXTERNAL' }); return true; } catch { return false; }
+        try { await FS().stat({ path: rel, directory: DIR }); return true; } catch { return false; }
       },
       async writeFile(p, data) {
         const rel = p.startsWith(BASE + '/') ? p.slice(BASE.length + 1) : p;
@@ -103,12 +107,12 @@
         }));
         const u8 = data instanceof Uint8Array ? data : new Uint8Array(data);
         await this.ensureDir(this.dirname(p));
-        await FS().writeFile({ path: rel, directory: 'EXTERNAL', data: b64(u8) });
+        await FS().writeFile({ path: rel, directory: DIR, data: b64(u8) });
       },
       async writeText(p, t) { await this.writeFile(p, new TextEncoder().encode(t)); },
       async readFile(p) {
         const rel = p.startsWith(BASE + '/') ? p.slice(BASE.length + 1) : p;
-        const r = await FS().readFile({ path: rel, directory: 'EXTERNAL' });
+        const r = await FS().readFile({ path: rel, directory: DIR });
         const bin = atob(r.data);
         const u8 = new Uint8Array(bin.length);
         for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
@@ -123,7 +127,7 @@
       async listDir(p) {
         const rel = p.startsWith(BASE + '/') ? p.slice(BASE.length + 1) : p;
         try {
-          const r = await FS().readdir({ path: rel, directory: 'EXTERNAL' });
+          const r = await FS().readdir({ path: rel, directory: DIR });
           return (r.files || []).filter(f => f.type === 'directory').map(f => f.name);
         } catch { return []; }
       },
@@ -151,6 +155,9 @@
       },
       async pickJava() { return null; },
       async spawnGame(versionId, username) {
+        if (IS_IOS) {
+          throw new Error('iOS 端暂不支持内置启动：请安装 PojavLauncher iOS（AltStore/TrollStore 侧载），游戏文件已在「文件」App → ecraft launcher → .minecraft 中，可直接导入使用');
+        }
         // 走原生引擎（Pojav 内核）启动游戏
         const g = Cap().EcraftGame;
         if (!g) throw new Error('原生游戏引擎不可用（请更新安装包）');
